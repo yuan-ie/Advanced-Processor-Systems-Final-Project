@@ -12,7 +12,7 @@ module adder_16bit_tb();
     reg [15:0]check_sum;
 
     //instantiate full adder
-    adder_16bit M1(.a(a), .b(b), .sum(sum), .c_out(c_out), .c_in(c_in));
+    adder_16bit M1 (.a(a), .b(b), .sum(sum), .c_out(c_out), .c_in(c_in));
     
     //changing values every 10ns
     initial

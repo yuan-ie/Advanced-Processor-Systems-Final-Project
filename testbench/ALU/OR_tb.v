@@ -10,7 +10,7 @@ module OR_tb();
     reg [63:0] check_out;
     
     // instantiate AND logic
-    OR M1(.in1(a), .in2(b), .out(out)); 
+    OR M1 (.in1(a), .in2(b), .out(out)); 
     
     initial
         begin

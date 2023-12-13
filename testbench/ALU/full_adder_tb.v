@@ -13,7 +13,7 @@ module full_adder_tb();
     reg check_sum;
 
     //instantiate full adder
-    full_adder M1(.a(a), .b(b), .sum(sum), .c_out(c_out), .c_in(c_in));
+    full_adder M1 (.a(a), .b(b), .sum(sum), .c_out(c_out), .c_in(c_in));
     
     //changing values every 10ns
     initial

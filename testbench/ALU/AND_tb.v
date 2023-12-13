@@ -10,7 +10,7 @@ module AND_tb();
     reg [63:0] check_out;
     
     // instantiate AND logic
-    AND M1(.in1(a), .in2(b), .out(out)); 
+    AND M1 (.in1(a), .in2(b), .out(out)); 
     
     initial
         begin

@@ -12,7 +12,7 @@ module adder_64bit_tb();
     reg [63:0]check_sum;
 
     //instantiate full adder
-    adder_64bit M1(.a(a), .b(b), .sum(sum), .overflow(overflow), .c_in(c_in));
+    adder_64bit M1 (.a(a), .b(b), .sum(sum), .overflow(overflow), .c_in(c_in));
     
     //changing values every 10ns
     initial

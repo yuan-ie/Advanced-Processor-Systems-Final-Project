@@ -9,7 +9,7 @@ module mux_tb();
     wire [63:0] out;
 
     //instantiate multiplexor
-    mux M1(.in_1(in_1), .in_2(in_2), .signal(signal), .out(out));
+    mux M1 (.in_1(in_1), .in_2(in_2), .signal(signal), .out(out));
     
     //changing values every 10ns
     initial

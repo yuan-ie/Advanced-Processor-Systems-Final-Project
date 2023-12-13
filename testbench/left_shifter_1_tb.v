@@ -7,7 +7,7 @@ module left_shifter_tb();
     wire [63:0] out;
 
     //instantiate left_shifter_1
-    left_shifter_1 M1(.in(in), .out(out));
+    left_shifter_1 M1 (.in(in), .out(out));
     
     //changing values every 10ns
     initial

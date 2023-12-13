@@ -12,7 +12,7 @@ module half_adder_tb();
     reg check_sum;
 
     //instantiate half adder
-    half_adder M1(.a(a), .b(b), .sum(sum), .c_out(c_out));
+    half_adder M1 (.a(a), .b(b), .sum(sum), .c_out(c_out));
 
     //changing values every 10ns
     initial

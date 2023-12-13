@@ -11,7 +11,7 @@ module multiplier_tb();
     reg [127:0] prod_check;
     
     // instantiate multiplier
-    multiplier M1(.a(a), .b(b), .product(product), .overflow(overflow));
+    multiplier M1 (.a(a), .b(b), .product(product), .overflow(overflow));
     
     initial
         begin

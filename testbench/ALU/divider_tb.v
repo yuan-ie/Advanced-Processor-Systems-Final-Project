@@ -12,7 +12,7 @@ module divider_tb();
     reg [63:0] rem_check;
     
     // instantiate multiplier
-    divider M1(.a(a), .b(b), .quotient(quotient), .overflow(overflow), .r(r));
+    divider M1 (.a(a), .b(b), .quotient(quotient), .overflow(overflow), .r(r));
     
     initial
         begin

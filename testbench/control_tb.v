@@ -9,7 +9,7 @@ module control_tb();
     wire [1:0] ALU_op;
     
     // instantiate control
-    control M1(.opcode(opcode), .ALUsrc(ALUsrc), .mem2reg(mem2reg), .reg_write(reg_write), .mem_read(mem_read), .mem_write(mem_write), .branch(branch), .ALU_op(ALU_op));
+    control M1 (.opcode(opcode), .ALUsrc(ALUsrc), .mem2reg(mem2reg), .reg_write(reg_write), .mem_read(mem_read), .mem_write(mem_write), .branch(branch), .ALU_op(ALU_op));
     
     initial
         begin
