@@ -11,9 +11,6 @@ module register_file (clk, rs1, rs2, rd, reg_write, write_data, read_data1, read
 
     output reg [63:0] read_data1, read_data2;   // sends data to ALU input
 
-    // opcodes
-    reg [6:0] R_TYPE, LOAD, STORE, BRANCH, opcode;
-
     // declare thirty-two 32-bit registers
     reg [31:0] registers [31:0];
 
@@ -31,14 +28,14 @@ module register_file (clk, rs1, rs2, rd, reg_write, write_data, read_data1, read
     // note: if always @*, then it runs when ANY input is updated
     always @(rs1, rs2) begin
         // assign read_data1 and read_data2 simultaneously
-        read_data1 <- $signed(registers[rs1]);
-        read_data2 <- $signed(registers[rs2]);
+        read_data1 <= $signed(registers[rs1]);
+        read_data2 <= $signed(registers[rs2]);
     end
 
     // on the positive edge of the clock, write data to write register
     always @(posedge clk) begin
         if (reg_write == 1) begin
-            register[rd] = write_data;
+            registers[rd] = write_data;
         end
     end
 

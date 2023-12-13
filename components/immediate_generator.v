@@ -3,8 +3,10 @@
 module immediate_generator(instruction, out);
 
     input [31:0] instruction;
-    output [63:0] out;
-    wire [6:0] opcode;
+    output reg [63:0] out;
+    reg [6:0] opcode;
+    
+    reg [6:0] LOAD, STORE, BRANCH;
 
     always @* begin
         // determine instruction type from opcode

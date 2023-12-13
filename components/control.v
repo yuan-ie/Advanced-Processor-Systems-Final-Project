@@ -2,14 +2,14 @@
 
 module control (opcode, ALUsrc, mem2reg, reg_write, mem_read, mem_write, branch, ALU_op);
     input [6:0] opcode; 
-    output ALUsrc, mem2reg, reg_write, mem_read, mem_write, branch;
-    output [1:0] ALU_op;
+    output reg ALUsrc, mem2reg, reg_write, mem_read, mem_write, branch;
+    output reg [1:0] ALU_op;
 
-    reg [6:0] R_TYPE, LOAD, STORE, BRANCH, opcode;
+    reg [6:0] R_TYPE, LOAD, STORE, BRANCH;
 
     always @* begin
         // determine instruction type from opcode
-        opcode = instruction[6:0];
+        //opcode = instruction[6:0];
 
         // instruction type opcodes
         R_TYPE = 7'b0110011;
@@ -40,7 +40,7 @@ module control (opcode, ALUsrc, mem2reg, reg_write, mem_read, mem_write, branch,
         if (STORE == opcode)
             begin
                 ALUsrc = 1;
-                mem2reg = X;
+                mem2reg = 1'bx; // doesn't matter?
                 reg_write = 0;
                 mem_read = 0;
                 mem_write = 1;
@@ -50,7 +50,7 @@ module control (opcode, ALUsrc, mem2reg, reg_write, mem_read, mem_write, branch,
         if (BRANCH == opcode)
             begin
                 ALUsrc = 0;
-                mem2reg = X;
+                mem2reg = 1'bx; // doesn't matter?
                 reg_write = 0;
                 mem_read = 0;
                 mem_write = 0;
