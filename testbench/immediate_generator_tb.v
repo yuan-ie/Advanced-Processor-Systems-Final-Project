@@ -16,7 +16,7 @@ module immediate_generator_tb();
         // store immediate 11
         #10 instruction = 32'b00000000000100000110010110100011;
         
-        // branch if immediate 11
+        // branch if immediate 3
         #10 instruction = 32'b00000000001100000010000111100111;
         
         #10 $finish;

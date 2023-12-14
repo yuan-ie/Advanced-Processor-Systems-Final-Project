@@ -18,7 +18,7 @@ module instruction_memory (address, instruction);
 
         // load all the initial data
         // [31:20] immediate (12 bits), [19:15] rs1 (5 bits), 
-        // [14:12] 010 funct 3 (for load), [11:7] rd, [6:0] 0000011 opcode for load
+        // [14:12] 110 funct 3 (for load), [11:7] rd, [6:0] 0000011 opcode for load
 
         // for 0: 000000000000 00001 010 00001 0000011
         // note: immediate and rd increments
@@ -30,8 +30,8 @@ module instruction_memory (address, instruction);
         mem[5] = 32'b00000000010100000010001100000011; // $6 = f
 
         // do the operation of the data: y = (a*b + c*d - e)/f
-        // [31:25] funct7 (12 bits), [24:20] rs2, [19:15] rs1 (5 bits), 
-        // [14:12] 010 funct 3 (for load), [11:7] rd, [6:0] 0110011 opcode for R-TYPE
+        // [31:25] funct7 (7 bits), [24:20] rs2, [19:15] rs1 (5 bits), 
+        // [14:12] funct3, [11:7] rd, [6:0] 0110011 opcode for R-TYPE
         mem[6] = 32'b00000010001000001000000010110011; // $1 = a * b
         mem[7] = 32'b00000010010000011000000110110011; // $3 = c * d
         mem[8] = 32'b00000000001100001000000010110011; // $1 = $1 + $3
@@ -39,7 +39,9 @@ module instruction_memory (address, instruction);
         mem[10] = 32'b00000010011000001100000010110011; // y = $1 = $1 / f
 
         // store y into address 2
-        mem[11] = 32'b00000000000100000110010110100011; // rs2 = $1, rs1 = $0
+        // [31:25] immediate (first 7 bits), [24:20] rs2, [19:15] rs1 (5 bits), 
+        // [14:12] 010 funct 3 (for store), [11:7] immediate (last 5 bits), [6:0] 0000011 opcode for load
+        mem[11] = 32'b00000000000100000010010110100011; // rs2 = $1, rs1 = $0
     end
 
     always @* begin

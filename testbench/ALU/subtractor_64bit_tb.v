@@ -12,7 +12,7 @@ module subtractor_64bit_tb();
     reg [63:0]check_dif;
 
     //instantiate full adder
-    subtractor_64bit M1 (.a(a), .b(b), .difference(difference), .overflow(overflow), .c_in(c_in));
+    subtractor M1 (.a(a), .b(b), .difference(difference), .overflow(overflow), .c_in(c_in));
     
     //changing values every 10ns
     initial
