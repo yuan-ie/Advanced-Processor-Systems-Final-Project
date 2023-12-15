@@ -2,13 +2,13 @@
 
 module processor();
 
+    reg clk;
+    integer i;
+
     // WIRES
-    wire clk;
     wire c_in;
     wire overflow;
     wire [64:0] r;
-
-    assign c_in = 0;
 
     // wires connect from output of PROGRAM COUNTER
     wire [31:0] pc_address;
@@ -54,7 +54,7 @@ module processor();
         // to ALU
 
     // wires connect from DATA MEMORY
-    wire [63:0] read_data;
+    wire [31:0] read_data;
         // to MUX input 1
 
     // wire connects from MUX connected to the register file
@@ -84,12 +84,14 @@ module processor();
     // wires connect from branch and zero signals
     wire and_result;
         // to MUX signal input connected to add block
+        
+    //assign pc_address = 32'b00000000000000000010000010000011;
     
 
     // instantiate modules
     
     // PROGRAM COUNTER
-    program_counter P(.clk(clk), .addr_in(add_mux_out), .addr_out(pc_address));
+    program_counter P(.clk(clk), .addr_in(add_mux_out[31:0]), .addr_out(pc_address));
 
     // INSTRUCTION MEMORY
     instruction_memory IM (.address(pc_address), .instruction(instruction));
@@ -103,9 +105,6 @@ module processor();
     // IMMEDIATE GENERATOR
     immediate_generator I (.instruction(instruction), .out(immediate));
 
-    // MUX CONNECTED TO REGISTER FILE
-    mux M1 (.in_1(read_data2), .in_2(immediate), .signal(ALUsrc), .out(reg_mux_out));
-
     // ALU CONTROL
     ALU_control AC (.ALUop(ALUop), .funct7(instruction[31:25]), .funct3(instruction[14:12]), .ALU_output(ALU_ctrl));
 
@@ -114,12 +113,15 @@ module processor();
 
     // DATA MEMORY
     data_memory D (.clk(clk), .address(ALU_result), .write_data(read_data2), .mem_read(memread), .mem_write(memwrite), .read_data(read_data));
-
-    // MUX CONNECTED TO DATA MEMORY
-    mux M2 (.in_1(ALU_result), .in_2(read_data), .signal(mem2reg), .out(data_mux_out));
     
     // AND the branch and zero signal
-    AND L1 (.in1(branch), .in2(zero), .out(add_mux_out)); 
+    AND L1 (.in1(branch), .in2(zero), .out(and_result)); 
+    
+    // MUX CONNECTED TO REGISTER FILE
+    mux M1 (.in_1(read_data2), .in_2(immediate), .signal(ALUsrc), .out(reg_mux_out));
+
+    // MUX CONNECTED TO DATA MEMORY
+    mux M2 (.in_1(ALU_result), .in_2({32'h00000000, read_data}), .signal(mem2reg), .out(data_mux_out));
 
     // MUX CONNECTED TO ADD BLOCK
     mux M3 (.in_1(sum_4), .in_2(sum_left), .signal(and_result), .out(add_mux_out));
@@ -128,9 +130,20 @@ module processor();
     left_shifter_1 LS (.in(immediate), .out(left_shift_out));
 
     // ADD WITH SHIFT
-    adder_64bit ADL (.a(pc_address), .b(left_shift_out), .sum(sum_left), .overflow(overflow), .c_in(c_in));
+    adder_64bit ADL (.a({32'h00000000, pc_address}), .b(left_shift_out), .sum(sum_left), .overflow(overflow), .c_in(1'b0));
     
     // ADD + 4
-    adder_64bit AD4 (.a(pc_address), .b(64'd4), .sum(sum_4), .overflow(overflow), .c_in(c_in));
+    adder_64bit AD4 (.a({32'h00000000, pc_address}), .b(64'd4), .sum(sum_4), .overflow(overflow), .c_in(1'b0));
+
+
+    // run clock for 20 cycles
+    initial begin
+        #10;
+        for(i = 0; i < 20; i = i + 1) begin
+            #10 clk = 0;
+            #10 clk = 1;
+
+        end
+    end
 
 endmodule
